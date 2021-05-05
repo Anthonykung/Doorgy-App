@@ -5,6 +5,15 @@
     "name": "Doorgy",
     "slug": "Doorgy",
     "version": "1.0.0",
+    "icon": "./resources/Doorgy-Logo.png",
+    "ios": {
+      "bundleIdentifier": "com.anthonykung.doorgy",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.anthonykung.doorgy",
+      "versionCode": 1
+    },
     "assetBundlePatterns": [
       "**/*"
     ]
