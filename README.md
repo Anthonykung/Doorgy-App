@@ -4,6 +4,8 @@ Mobile app for both Android and iOS for Doorgy Project - A smart pet door for yo
 
 ***APLHA RELEASE WARNING*** Currently Under Development - This is not production ready!
 
+Only Android will be supported at this time due to Apple Developer Fees.
+
 Estimated Time of Completion: May 28, 2021
 
 This is an open source academic group project for ECE 342 Junior Design at Oregon State University.
