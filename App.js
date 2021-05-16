@@ -8,6 +8,32 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 function Home({ navigation }) {
+
+  const doorgyAuth = () => {
+    //POST request
+    fetch('https://doorgy.anth.dev/auth', {
+      method: 'POST', //Request Type
+      body: JSON.stringify({
+        username: 'Anthonykung',
+        authToken: 'Te3i6Mjy8~lT3uJenKqI0I&dj1cIe53z%1thZPFn*W'
+      }), //post body
+      headers: {
+        //Header Defination
+        'Content-Type':
+          'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+    })
+    .then((responseJson) => {
+      alert(responseJson);
+      console.log(responseJson);
+    })
+    //If response is not in json then in error
+    .catch((error) => {
+      alert(error);
+      console.error(error);
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Image
@@ -30,9 +56,7 @@ function Home({ navigation }) {
         placeholder="Password"
       />
       <br />
-      <Button onPress={() => {
-        alert('This app is still under development');
-      }}
+      <Button onPress={doorgyAuth}
       style={styles.button}
       title="Login" />
     </View>
