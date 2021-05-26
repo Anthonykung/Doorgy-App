@@ -115,3 +115,6 @@ web-build/
 
 # VS Code
 .vscode
+
+# Archive
+.archive
