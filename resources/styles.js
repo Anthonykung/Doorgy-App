@@ -8,6 +8,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: '5%',
   },
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: '5%',
+  },
   textInput: {
     paddingHorizontal: 8,
     paddingVertical: 6,
@@ -29,10 +34,27 @@ export const styles = StyleSheet.create({
     borderColor: '#888',
     borderWidth: 1,
     borderRadius: 4,
-    backgroundColor: "#FF1493",
+    backgroundColor: "deeppink",
     marginHorizontal: "1%",
     marginBottom: 6,
     minWidth: "10%",
     textAlign: "center",
   },
+  secondaryButton: {
+    paddingHorizontal: 8,
+    paddingVertical: 20,
+    borderRadius: 4,
+    backgroundColor: "coral",
+    alignSelf: "center",
+    marginHorizontal: "1%",
+    marginBottom: 6,
+    minWidth: "48%",
+    textAlign: "center",
+  },
+  secondaryLabel: {
+    fontSize: 18,
+    fontWeight: "800",
+    color: "white",
+    textAlign: "center",
+  }
 });

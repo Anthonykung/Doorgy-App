@@ -23,34 +23,13 @@ import Register from './views/register';
 import Home from './views/home';
 //import Init from './views/init';
 import Splash from './views/splash';
+import Scheduler from './views/scheduler';
+import History from './views/history';
 
 export default function App() {
   const [check, setCheck] = React.useState(false);
   const [user, setUser] = React.useState(true);
   const [initialize, setInitialize] = React.useState(true);
-
-  useEffect(() => {
-    async () => {
-      try {
-        setInitialize((curry) => curry = false);
-        let data = await SecureStore.getItemAsync('doorgy');
-        if (data) {
-          data = JSON.parse(data);
-          console.log('Data: ');
-          console.dir(data);
-          setUser((curry) => curry = data);
-          console.log('User: ');
-          console.dir(user);
-        }
-        else {
-          setUser((curry) => curry = null);
-        }
-      }
-      catch (err) {
-        console.error('Init failed:', err);
-      }
-    }
-  });
 
   return (
     <NavigationContainer>
@@ -59,18 +38,11 @@ export default function App() {
           headerShown: false
         }}
       >
-        {check ? (
-          <Stack.Screen options={{headerShown: false}} name="Splash" component={Splash} />
-        ) : user == null ? (
-          <>
-            <Stack.Screen options={{headerShown: false}} name="Register" component={Register} />
-            <Stack.Screen options={{headerShown: false}} name="Login" component={Login} />
-          </>
-        ) /*: user.wifi == null ? (
-          <Stack.Screen options={{headerShown: false}} name="Init" component={Init} />
-        ) */: (
-          <Stack.Screen options={{headerShown: false}} name="Home" component={Home} />
-        )}
+        <Stack.Screen options={{headerShown: false}} name="Register" component={Register} />
+        <Stack.Screen options={{headerShown: false}} name="Login" component={Login} />
+        <Stack.Screen options={{headerShown: false}} name="Home" component={Home} />
+        <Stack.Screen options={{headerShown: false}} name="Scheduler" component={Scheduler} />
+        <Stack.Screen options={{headerShown: false}} name="History" component={History} />
       </Stack.Navigator>
     </NavigationContainer>
   );

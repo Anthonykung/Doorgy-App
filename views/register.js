@@ -14,9 +14,12 @@ export default function Register({ navigation }) {
   const [username, setUsername] = React.useState(true);
   const [password, setPassword] = React.useState(true);
   const [errorMsg, setErrorMsg] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
   const doorgyRegister = async () => {
+    setLoading((curry) => curry = true);
     if (typeof username != "string" || username == "" || typeof password != "string" || password == "") {
+      setLoading((curry) => curry = false);
       setErrorMsg((curry) => curry = 'Error: Fields Cannot Be Empty');
     }
     else {
@@ -43,18 +46,22 @@ export default function Register({ navigation }) {
           });
           async (data) => {await SecureStore.setItemAsync('doorgy', data);};
           console.log('Cred saved');
-          navigation.navigate('Init');
+          setLoading((curry) => curry = false);
+          navigation.navigate('Home');
         }
         else if (responseJson.status == 'This username has been taken') {
+          setLoading((curry) => curry = false);
           setErrorMsg((curry) => curry = 'This username has been taken, try a different username?');
         }
         else {
+          setLoading((curry) => curry = false);
           setErrorMsg((curry) => curry = 'Server Error: Unable to create user, try a different username?');
         }
       })
       .catch((error) => {
         alert(error);
         console.error(error);
+        setLoading((curry) => curry = false);
         setErrorMsg((curry) => curry = 'Server Error: Unable to create user, try a again?');
       });
     }
@@ -94,12 +101,21 @@ export default function Register({ navigation }) {
       style={styles.button}
       title="Register" />
       <Br />
+      {loading && (
+        <View>
+          <Text style={{ color: "green", fontWeight: "bold" }}>Hang on one sec, working on it...</Text>
+          <Br />
+        </View>
+      )}
+      <Br />
       <Pressable
         onPress={() => navigation.navigate('Login')}
         style={{color: '#888', fontSize: 18}}
       >
       <Text style={{color: '#888', fontSize: 18}}>Already have an account? Click Me!</Text>
       </Pressable>
+      <Br />
+      <Text style={{color: 'deeppink', fontSize: 18}}>Made with {'<3'} by Anthony Kung</Text>
     </View>
   );
 }

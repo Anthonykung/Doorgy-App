@@ -14,10 +14,12 @@ export default function Login({ route, navigation }) {
   const [username, setUsername] = React.useState(true);
   const [password, setPassword] = React.useState(true);
   const [errorMsg, setErrorMsg] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
   const relayMsg = route.params?.error;
 
   const doorgyAuth = async () => {
+    setLoading((curry) => curry = true);
     if (typeof username != "string" || username == "" || typeof password != "string" || password == "") {
       setErrorMsg((curry) => curry = 'Error: Fields Cannot Be Empty');
     }
@@ -39,24 +41,28 @@ export default function Login({ route, navigation }) {
         // alert(responseJson.status);
         console.log(responseJson);
         if (responseJson.status == 'OK') {
-          let user = responseJson;
+          let user = {username: username, password: password};
           async function updateUser(user) {
             await SecureStore.setItemAsync('doorgy', JSON.stringify(user));
           }
           updateUser(user);
           console.log('Cred saved');
+          setLoading((curry) => curry = false);
           navigation.navigate('Home');
         }
         else if (responseJson.status == 'Incorrect credentials') {
+          setLoading((curry) => curry = false);
           setErrorMsg((curry) => curry = 'Incorrect username/password, are you sure you exist? (pun intended :P)');
         }
         else {
+          setLoading((curry) => curry = false);
           setErrorMsg((curry) => curry = 'Server Error: Unable to login, try again?');
         }
       })
       .catch((error) => {
         alert(error);
         console.error(error);
+        setLoading((curry) => curry = false);
         setErrorMsg((curry) => curry = 'Server Error: Unable to create user, try a again?');
       });
     }
@@ -101,6 +107,13 @@ export default function Login({ route, navigation }) {
       <Button onPress={doorgyAuth}
       style={styles.button}
       title="Login" />
+      <Br />
+      {loading && (
+        <View>
+          <Text style={{ color: "green", fontWeight: "bold" }}>Hang on one sec, working on it...</Text>
+          <Br />
+        </View>
+      )}
       <Br />
       <Pressable
         onPress={() => navigation.navigate('Register')}
