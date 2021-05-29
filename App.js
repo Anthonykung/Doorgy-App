@@ -24,6 +24,7 @@ import Home from './views/home';
 //import Init from './views/init';
 import Splash from './views/splash';
 import Scheduler from './views/scheduler';
+import Schedule from './views/schedule';
 import History from './views/history';
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="Login" component={Login} />
         <Stack.Screen options={{headerShown: false}} name="Home" component={Home} />
         <Stack.Screen options={{headerShown: false}} name="Scheduler" component={Scheduler} />
+        <Stack.Screen options={{headerShown: false}} name="Schedule" component={Schedule} />
         <Stack.Screen options={{headerShown: false}} name="History" component={History} />
       </Stack.Navigator>
     </NavigationContainer>

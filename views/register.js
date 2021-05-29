@@ -40,11 +40,11 @@ export default function Register({ navigation }) {
         // alert(responseJson.status);
         console.log(responseJson);
         if (responseJson.status == 'OK') {
-          let data = JSON.stringify({
-            username: username,
-            password: password
-          });
-          async (data) => {await SecureStore.setItemAsync('doorgy', data);};
+          let user = {username: username, password: password};
+          async function updateUser(user) {
+            await SecureStore.setItemAsync('doorgy', JSON.stringify(user));
+          }
+          updateUser(user);
           console.log('Cred saved');
           setLoading((curry) => curry = false);
           navigation.navigate('Home');

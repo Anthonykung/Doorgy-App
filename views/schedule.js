@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, Image, Animated, Pressable, TouchableOpacity, ScrollView } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 import { styles } from '../resources/styles';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,11 +11,14 @@ import Br from '../components/br';
 
 const Stack = createStackNavigator();
 
-export default function History({ navigation }) {
+export default function Schedule({ navigation }) {
   const [status, setStatus] = React.useState(true);
-  const [config, setConfig] = React.useState(false);
-  const [user, setUser] = React.useState(false);
-  const [history, setHistory] = React.useState(false);
+  const [config, setConfig] = React.useState({version: -1});
+  const [user, setUser] = React.useState({});
+  const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const [selection, setSelection] = React.useState(true);
+  const [temp, setTemp] = React.useState({});
+  const [schedule, setSchedule] = React.useState({});
 
   const doorgyLogout = async () => {
     try {
@@ -27,7 +31,6 @@ export default function History({ navigation }) {
   }
 
   const doorgyRequest = async () => {
-    console.log('Doorgy Request');
     console.log(user);
     //POST request
     fetch('https://doorgy.anth.dev/api/auth', {
@@ -43,13 +46,9 @@ export default function History({ navigation }) {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      if (responseJson.status == 'OK') {
+      if (responseJson.version > config.version) {
         setConfig((curry) => curry = responseJson);
         console.log('Config updated');
-      }
-      else {
-        console.error('Doorgy Request Error');
-        //alert('Error updating config');
       }
     })
     .catch((error) => {
@@ -92,12 +91,7 @@ export default function History({ navigation }) {
         else {
           data = JSON.parse(data);
           setUser((curry) => curry = data);
-          if (user.username) {
-            doorgyRequest();
-          }
-          else {
-            setStatus((curry) => {curry = false});
-          }
+          doorgyRequest();
         }
       }
       catch (err) {
@@ -108,16 +102,8 @@ export default function History({ navigation }) {
       setStatus((curry) => {curry = false});
       init();
     }
-    if (!config.username || !config.history) {
+    if (!config.username) {
       doorgyRequest();
-    }
-    if (config.history && Array.isArray(config.history)) {
-      console.log('Config.History:', config.history);
-      setHistory((curry) => {curry = config.history});
-    }
-    if (history) {
-      console.log('Curry.History', history);
-      setHistory((curry) => {curry = curry.reverse()});
     }
   });
 
@@ -126,31 +112,45 @@ export default function History({ navigation }) {
       <Image
         source={require('../resources/Doorgy-Logo.png')}
         style={{ width: 100, height: 100 }}
-      />   
+      />
       <Text style={{color: '#888', fontSize: 20}}>Doorgy Service</Text>
-      <StatusBar style="auto" />
       <Br />
-      <Text style={{color: '#888', fontSize: 18}}>Here's everything that has happened 😉</Text>
+      <Text style={{color: '#888', fontSize: 18}}>Click on the schedule to delete. What if you accidentally click it you say? Well, too bad it will be forever lost 🤷</Text>
       <Br />
       <ScrollView style={{
         width: '100%',
         height: '80%'
       }}>
-        {Array.isArray(config.history) ? (config.history.sort().map((value, index, arr) => {
-          let curryTime = new Date(value.time);
-          return (
-            <Text key={index} style={[styles.secondaryButton, (value.event == 'open') && {backgroundColor: '#Df9388'}, (value.event == 'close') && {backgroundColor: '#a9df88'}, (value.event == 'lock') && {backgroundColor: '#88d4df'}, (value.event == 'unlock') && {backgroundColor: '#be88df'}]}>
-              Event: {value.event}{'\n'}
-              Time: {curryTime.getFullYear()}{'-'}{curryTime.getMonth()}{'-'}{curryTime.getDate()}{' '}{curryTime.getHours()}{':'}{curryTime.getMinutes()}
+        {config.schedule && config.schedule.map((value, index, arr) => (
+          <TouchableOpacity
+            onPress={() => {
+              if (index > -1) {
+                arr.splice(index, 1);
+              }
+              doorgyUpdate();
+            }}
+            style={[
+              styles.secondaryButton
+            ]}
+            key={index}
+          >
+            <Text
+              style={[
+                styles.secondaryLabel
+              ]}
+            >
+              Day: {value.day}{'\n'}
+              Start Time: {value.hour + ':' + value.minutes}{'\n'}
+              End Time: {value.endHour + ':' + value.endMinutes}
             </Text>
-          )
-        })) : <Text>oops I seem to have forgotten your history :O or I'm just loading 😅</Text>}
+          </TouchableOpacity>
+        ))}
       </ScrollView>
       <Br />
       <Button onPress={() => {
-        navigation.navigate('Home');
+        navigation.navigate('Scheduler');
       }}
-      style={[styles.button, {flex: 2}]}
+      style={[styles.button, {flex: 1}]}
       title="Go Back" />
     </View>
   );

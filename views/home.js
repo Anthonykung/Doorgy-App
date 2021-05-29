@@ -14,6 +14,7 @@ export default function Home({ navigation }) {
   const [status, setStatus] = React.useState(true);
   const [config, setConfig] = React.useState(true);
   const [user, setUser] = React.useState(true);
+  const [checks, setChecks] = React.useState(0);
 
   const doorgyLogout = async () => {
     try {
@@ -133,6 +134,7 @@ export default function Home({ navigation }) {
         {/* Unlock Command*/}
         <TouchableOpacity
           onPress={() => {
+            doorgyRequest();
             if (config.unlock == false) {
               config.unlock = true;
             }
@@ -159,6 +161,7 @@ export default function Home({ navigation }) {
         {/* Open Command*/}
         <TouchableOpacity
           onPress={() => {
+            doorgyRequest();
             if (config.open == false) {
               config.open = true;
             }
@@ -222,6 +225,10 @@ export default function Home({ navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
+      <Br />
+      <Button onPress={() => {doorgyRequest(); alert('✅ Config Updated!');}}
+      style={styles.button}
+      title="Update Config" />
       <Br />
       <Button onPress={doorgyLogout}
       style={styles.button}
