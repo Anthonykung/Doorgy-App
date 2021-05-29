@@ -4,15 +4,15 @@
   "expo": {
     "name": "Doorgy",
     "slug": "Doorgy",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "icon": "./resources/Doorgy-Logo.png",
     "ios": {
       "bundleIdentifier": "com.anthonykung.doorgy",
-      "buildNumber": "1.3.0"
+      "buildNumber": "2.0.0"
     },
     "android": {
       "package": "com.anthonykung.doorgy",
-      "versionCode": 4
+      "versionCode": 5
     },
     "assetBundlePatterns": [
       "**/*"

@@ -29,7 +29,7 @@ Doorgy App is part of the Doorgy Project Group, all parts of Doorgy Project are 
 | Project       | Registry                                                                     | Repository                                                                                   |
 | ------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | Doorgy        | [https://www.npmjs.com/package/doorgy](https://www.npmjs.com/package/doorgy) | [https://github.com/Anthonykung/Doorgy](https://github.com/Anthonykung/Doorgy)               |
-| Doorgy Server |                                                                              | [https://github.com/Anthonykung/Doorgy-Server](https://github.com/Anthonykung/Doorgy-Server) |
+| Doorgy Server | [https://doorgy.anth.dev](https://doorgy.anth.dev)                           | [https://github.com/Anthonykung/Doorgy-Server](https://github.com/Anthonykung/Doorgy-Server) |
 | Doorgy App    |                                                                              | [https://github.com/Anthonykung/Doorgy-App](https://github.com/Anthonykung/Doorgy-App)       |
 
 ## License
